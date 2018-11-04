@@ -1,0 +1,14 @@
+note.txt
+
+id 
+name
+description
+
+//DATETIME
+start
+end
+
+echo <pre>;
+print_r($var);
+echo </pre>;
+

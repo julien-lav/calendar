@@ -1,24 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Calendar</title>
-	<link rel="stylesheet" type="text/css" href="/ccs/calendar.css">
-</head>
-<body>
+
 
 	<?php
-	require '../src/Date/Month.php';
-
+	require '../src/Calendar/Month.php';
+	require '../src/Calendar/Events.php';
+	require '../views/header.php';
 	
-	try 
-	{
-	$month = new App\Date\Month($_GET['month'] ? null, $_GET['year']  null);
-	}
-	catch (\Exception $e)
-	{
-	$month = new App\Date\Month();
-	}
-	$start = $month->getStratingDay()->modify('last monday');
+	$month = new App\Calendar\Month($_GET['month'] ?? null, $_GET['year']  null);;
+
+	$events = new Calendar\Events();
+	
+	$month = new App\Calendar\Month();
+	
+	$start = $month->getStratingDay();
+	$start = $start->format('N') === '1' ? $start->$mounth->getStarting()->modify('last monday'); 
+
+	$weeks = $month->getWeeks();
+	$end = (clone $start)->modify('+' . (6 + 7 * ($weeks -1)) +  . ' days');
+
+	$events = $events->getEventsBetweenByDay($start, $end); 
 
 	?>
 	<h1>
@@ -41,13 +40,21 @@
 			<tr>
 				<?php foreach($month->days as $k => $day): 
 					$date = (clone $start)->modify("+" . ($k +$i*7) ." days");
+					$eventsForDay = $events[$date->format('Y-m-d')] ?? [];
 					?>
 				<td class="<?= $month->withinMonth($date) ? '' : 'calendar__othermonth'; ?>">
 					<?php if ($i === 0 ); ?>
 					<div class="calendar__weekday"><?= $day ;?></div>
 				<?php endif; ?>
 					<div class="calendar__day"><?= $date->format('d') ;?></div>
-				<?php endforeach; >
+					<?php foreach($eventsForDay as $events) ?>
+					<div class="calendar__event">
+						<?= (new DateTime($event['start']))->format('H:i') ?> - <a href="/event.php?id=<?= $event['id'] ;?>"><?= $event['name']; ?></a>
+
+					</div>
+					<?php endforeach; ?>
+
+				<?php endforeach; ?>
 
 					<!-- ->format('d') --> 
 				</td>
