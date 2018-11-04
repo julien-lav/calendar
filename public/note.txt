@@ -12,3 +12,8 @@ echo <pre>;
 print_r($var);
 echo </pre>;
 
+use Calendar\
+ {
+ 	Events,
+ 	Mounth
+ };

@@ -37,6 +37,23 @@ class Events {
 
     }
 
+    public function find (int \$id) 
+
+    {
+
+    $pdo = new PDO('mysql:host=localhost;dbname=tuto', 'root', 'root', [
+    		\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+    		\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
+    	]);
+    	$sql = "SELECT * FROM events WHERE id = $id LIMIT 1";
+  		var_dump($sql);
+
+  		$statement = $pdo->query($sql);
+  		$results = $statement->fetch();
+    
+    	return $results;
+    }
+
 
 
 }
