@@ -23,7 +23,7 @@ class Events {
     {
     	$events = $this->getEventsBetween($start, $end);
     	$days = [];
-    	foreach ($$events as $event) {
+    	foreach ($events as $event) {
     		$date = explode(' ', $event['start'])[0];
     		if(!isset($days['$date']))
     		{
